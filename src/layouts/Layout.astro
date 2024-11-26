@@ -1,0 +1,148 @@
+---
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div class="line-markers">
+      {Array.from({ length: 100 }).map(() => (
+        <div class="tilde">~</div>
+      ))}
+    </div>
+    <main>
+      <div class="content-wrapper">
+        <slot />
+      </div>
+    </main>
+    <footer class="status-bar">
+      <div class="status-left">NORMAL</div>
+      <div class="status-right">
+        <a href="https://github.com" target="_blank" rel="noopener">github</a>
+        <a href="https://x.com" target="_blank" rel="noopener">x.com</a>
+        <a href="mailto:your@email.com">email</a>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --bg: #1e1e2e;
+    --bg-light: #24273a;
+    --fg: #cad3f5;
+    --accent: #8aadf4;
+    --line-number: #494d64;
+    --comment: #6e738d;
+    --status-bar: #181926;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--bg);
+    color: var(--fg);
+    height: 100%;
+  }
+
+  body {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    min-height: 100vh;
+    position: relative;
+  }
+
+  main {
+    padding: 6rem 2rem 2rem;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .content-wrapper {
+    width: 100%;
+    max-width: 80ch;
+    line-height: 1.6;
+  }
+
+  .line-markers {
+    padding: 6rem 1.5rem 2rem;
+    color: var(--line-number);
+    user-select: none;
+    font-size: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    min-width: 2rem;
+  }
+
+  .tilde {
+    line-height: 1.6;
+  }
+
+  .status-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--status-bar);
+    padding: 0.5rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+  }
+
+  .status-right {
+    display: flex;
+    gap: 1rem;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--accent);
+    margin: 1.5rem 0 1rem 0;
+  }
+
+  a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  pre {
+    padding: 1rem;
+    border-radius: 4px;
+    overflow-x: auto;
+    background: var(--bg-light);
+    margin: 1rem 0;
+  }
+
+  code {
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .post-date {
+    color: var(--comment);
+    font-size: 0.9rem;
+  }
+</style>

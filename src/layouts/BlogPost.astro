@@ -1,0 +1,70 @@
+---
+import Layout from './Layout.astro';
+
+const { frontmatter } = Astro.props;
+---
+
+<Layout title={frontmatter.title}>
+  <nav class="terminal-nav">
+    <a href="/" class="back-link">
+      <span class="prompt">$</span> cd ..
+    </a>
+  </nav>
+  <article>
+    <div class="post-header">
+      <h1>{frontmatter.title}</h1>
+      <p class="post-date">{new Date(frontmatter.date).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      })}</p>
+    </div>
+    <div class="content">
+      <slot />
+    </div>
+  </article>
+</Layout>
+
+<style>
+  .terminal-nav {
+    margin-bottom: 2rem;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: var(--bg-light);
+    border-radius: 4px;
+    transition: background 0.2s;
+  }
+
+  .back-link:hover {
+    text-decoration: none;
+    opacity: 0.8;
+  }
+
+  .prompt {
+    color: var(--accent);
+  }
+
+  .post-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--line-number);
+  }
+
+  .content {
+    margin-top: 2rem;
+  }
+
+  .content :global(p) {
+    margin-bottom: 1rem;
+  }
+
+  .content :global(img) {
+    max-width: 100%;
+    height: auto;
+  }
+</style>
